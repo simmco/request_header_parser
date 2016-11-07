@@ -1,12 +1,11 @@
-var express = require("express");
+const express = require("express");
 
-var app = express();
+const app = express();
 
-app.get("/", function (req,res) {
-  res.send("Visit /api/whoami to get the information");
-})
+app.set('port', (process.env.PORT || 5000));
 
-app.get("/api/whoami", function(req, res) {
+app.get("/", function(req, res) {
+
   let ip = req.connection.remoteAddress;
   let useragent = req.headers['user-agent'];
   let lang = req.headers['accept-language'];
@@ -31,5 +30,8 @@ app.get("/api/whoami", function(req, res) {
   }
   res.send(api);
 })
-var port = process.env.PORT || 3000;
-app.listen(port);
+const port = process.env.PORT || 3000;
+
+app.listen(app.get('port'), function () {
+    console.log('Node app is running on port', app.get('port'))
+});

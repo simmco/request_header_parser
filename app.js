@@ -5,12 +5,14 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 
 app.get("/", function(req, res) {
-
-  var ip = req.connection.remoteAddress;
+  // get the ip
+  var ip = request.headers['x-forwarded-for'] ||
+     request.connection.remoteAddress ||
+     request.socket.remoteAddress ||
+     request.connection.socket.remoteAddress;
+       
+  //get the operating system
   var useragent = req.headers['user-agent'];
-  var lang = req.headers['accept-language'];
-
-  //get the operating system out of useragent
   var software = "";
   for(i=0; i < useragent.length; i++) {
       var placeholder = useragent.indexOf(")");
@@ -21,6 +23,7 @@ app.get("/", function(req, res) {
       }
   }
   //get the language
+  var lang = req.headers['accept-language'];
   var language = lang.split(",")[0];
 
   var api = {

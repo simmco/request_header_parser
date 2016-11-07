@@ -6,11 +6,11 @@ app.set('port', (process.env.PORT || 5000));
 
 app.get("/", function(req, res) {
   // get the ip
-  var ip = request.headers['x-forwarded-for'] ||
-     request.connection.remoteAddress ||
-     request.socket.remoteAddress ||
-     request.connection.socket.remoteAddress;
-       
+  var ip = req.headers['x-forwarded-for'] ||
+     req.connection.remoteAddress ||
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress;
+
   //get the operating system
   var useragent = req.headers['user-agent'];
   var software = "";

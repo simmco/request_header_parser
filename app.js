@@ -2,7 +2,11 @@ var express = require("express");
 
 var app = express();
 
-app.use("/api/whoami", function(req, res) {
+app.get("/", function (req,res) {
+  res.send("Visit /api/whoami to get the information");
+})
+
+app.get("/api/whoami", function(req, res) {
   let ip = req.connection.remoteAddress;
   let useragent = req.headers['user-agent'];
   let lang = req.headers['accept-language'];
@@ -27,5 +31,5 @@ app.use("/api/whoami", function(req, res) {
   }
   res.send(api);
 })
-
-app.listen(3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
